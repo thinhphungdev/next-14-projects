@@ -17,6 +17,7 @@ function Hero(props: HeroProps) {
           alt={props.imgAlt}
           className='object-cover'
         />
+        <div className='absolute inset-0 bg-gradient-to-tr from-slate-800' />
       </div>
       <div className='flex pt-48 justify-center items-center'>
         <h1 className='text-white text-6xl'>{props.title}</h1>
