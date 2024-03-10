@@ -1,6 +1,7 @@
 import { db } from '@/db';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { deleteSnippet } from '@/actions';
 
 type SnippetDetailsPageProps = {
   params: {
@@ -19,6 +20,8 @@ export default async function SnippetDetailsPage(
 
   if (!snippet) return notFound();
 
+  const deleteSnippetAction = deleteSnippet.bind(null, snippet.id);
+
   return (
     <div>
       <div className='flex m-4 items-center justify-between'>
@@ -31,7 +34,11 @@ export default async function SnippetDetailsPage(
           >
             Edit
           </Link>
-          <button className='p-2 border rounded'>Delete</button>
+          <form action={deleteSnippetAction}>
+            <button type='submit' className='p-2 border rounded'>
+              Delete
+            </button>
+          </form>
         </div>
       </div>
 
