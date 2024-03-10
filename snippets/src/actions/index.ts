@@ -41,16 +41,28 @@ export async function createSnippet(formState: { message: string }, formData: Fo
     }
 
     // Create new record in DB
-    const snippet = await db.snippet.create({
-        data: {
-            title,
-            code,
-        },
-    });
+    try {
+        const snippet = await db.snippet.create({
+            data: {
+                title,
+                code,
+            },
+        });
 
-    console.log(snippet); // this log will be logged on the server side
+        console.log(snippet); // this log will be logged on the server side
+
+    } catch (error) {
+        if (error instanceof Error) {
+            return {
+                message: error.message
+            }
+        } else {
+            return {
+                message: 'Something went wrong'
+            }
+        }
+    }
 
     // redirect back to home page
     redirect('/');
-
 }
