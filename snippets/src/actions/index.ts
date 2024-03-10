@@ -19,3 +19,38 @@ export async function deleteSnippet(id: number) {
 
     redirect(`/`)
 }
+
+export async function createSnippet(formState: { message: string }, formData: FormData) {
+    // This need to be a server action
+
+
+    // check user input and make sure the're valid
+    const title = formData.get('title');
+    const code = formData.get('code');
+
+    if (typeof title !== 'string' || title.length < 3) {
+        return {
+            message: 'Title must be a string and longer'
+        }
+    }
+
+    if (typeof code !== 'string' || code.length < 5) {
+        return {
+            message: 'Code must be a string and longer'
+        }
+    }
+
+    // Create new record in DB
+    const snippet = await db.snippet.create({
+        data: {
+            title,
+            code,
+        },
+    });
+
+    console.log(snippet); // this log will be logged on the server side
+
+    // redirect back to home page
+    redirect('/');
+
+}
