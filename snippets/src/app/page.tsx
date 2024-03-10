@@ -1,8 +1,11 @@
 import { db } from '@/db';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 export default async function HomePage() {
   const snippets = await db.snippet.findMany();
+
+  if (!snippets) return notFound();
 
   return (
     <div>
