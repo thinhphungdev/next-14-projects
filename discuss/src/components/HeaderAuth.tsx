@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import {
   NavbarItem,
   Button,
@@ -18,7 +17,12 @@ function HeaderAuth() {
 
   let authContent: React.ReactNode;
 
-  if (session?.data?.user) {
+  if (session.status === 'loading') {
+    return 'Loading...';
+  }
+
+
+  if (session?.data?.user && session.status === 'authenticated') {
     authContent = (
       <Popover placement='left'>
         <PopoverTrigger>
