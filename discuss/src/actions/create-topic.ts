@@ -22,6 +22,8 @@ type CreateTopicFormState = {
 }
 
 export async function createTopic(formState: CreateTopicFormState, formData: FormData): Promise<CreateTopicFormState> {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
 
     // Form Validation stuffs
     const result = createTopicSchema.safeParse({

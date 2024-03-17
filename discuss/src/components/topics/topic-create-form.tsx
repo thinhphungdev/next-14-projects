@@ -12,6 +12,7 @@ import {
 import { useFormState } from 'react-dom';
 
 import * as actions from '@/actions';
+import FormButton from '../common/form-button';
 
 function TopicCreateForm() {
   const [formState, action] = useFormState(actions.createTopic, {
@@ -51,7 +52,7 @@ function TopicCreateForm() {
               </div>
             ) : null}
 
-            <Button type='submit'>Submit</Button>
+            <FormButton>Save</FormButton>
           </div>
         </form>
       </PopoverContent>
