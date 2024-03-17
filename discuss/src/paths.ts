@@ -3,14 +3,14 @@ const paths = {
         return '/'
     },
     topicShowPath(topicSlug: string) {
-        return `/topic/${topicSlug}`
+        return `/topics/${topicSlug}`
     },
     postCreatePath(topicSlug: string) {
-        return `/topic/${topicSlug}/posts/new`
+        return `/topics/${topicSlug}/posts/new`
 
     },
     postShowPath(topicSlug: string, postId: string) {
-        return `/topic/${topicSlug}/posts/${postId}`
+        return `/topics/${topicSlug}/posts/${postId}`
 
     }
 }
