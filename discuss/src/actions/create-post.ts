@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { auth } from "@/auth"
+import paths from "@/paths";
 
 const createPostSchema = z.object({
     title: z.string().min(3),
@@ -33,7 +34,7 @@ export async function createPost(slug: string, formState: CreatePostFormState, f
         }
     }
 
-
+    // authentication stuff
     const session = await auth();
 
     if (!session || !session.user) {
@@ -44,6 +45,7 @@ export async function createPost(slug: string, formState: CreatePostFormState, f
         }
     }
 
+    // DB related stuffs
     const topic = await db.topic.findFirst({
         where: { slug }
     })
@@ -78,14 +80,13 @@ export async function createPost(slug: string, formState: CreatePostFormState, f
         } else {
             return {
                 errors: {
-                    _form: ['Something went wrong']
+                    _form: ['Something went wrong, failed to create post']
                 }
             }
         }
     }
 
     // revalidate the topic show page
-    return {
-        errors: {}
-    }
+    revalidatePath(paths.topicShowPath(slug))
+    redirect(paths.postShowPath(slug, post.id));
 }
