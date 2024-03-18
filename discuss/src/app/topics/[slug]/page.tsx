@@ -15,7 +15,7 @@ function TopicShow({ params }: TopicShowProps) {
       </div>
 
       <div>
-        <PostCreateForm />
+        <PostCreateForm slug={slug} />
       </div>
     </div>
   );

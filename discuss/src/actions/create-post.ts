@@ -20,7 +20,7 @@ type CreatePostFormState = {
     }
 }
 
-export async function createPost(formState: CreatePostFormState, formData: FormData): Promise<CreatePostFormState> {
+export async function createPost(slug: string, formState: CreatePostFormState, formData: FormData): Promise<CreatePostFormState> {
     // Form fields validation stuffs
     const result = createPostSchema.safeParse({
         title: formData.get('title'),
@@ -44,6 +44,19 @@ export async function createPost(formState: CreatePostFormState, formData: FormD
         }
     }
 
+    const topic = await db.topic.findFirst({
+        where: { slug }
+    })
+
+    if (!topic) {
+        return {
+            errors: {
+                _form: ['Cannot find topic']
+            }
+        }
+    }
+
+
     let post: Post;
 
     try {
@@ -51,6 +64,8 @@ export async function createPost(formState: CreatePostFormState, formData: FormD
             data: {
                 title: result.data.title,
                 content: result.data.content,
+                topicId: topic.id,
+                userId: session.user.id
             }
         })
     } catch (err) {
@@ -58,6 +73,12 @@ export async function createPost(formState: CreatePostFormState, formData: FormD
             return {
                 errors: {
                     _form: [err.message]
+                }
+            }
+        } else {
+            return {
+                errors: {
+                    _form: ['Something went wrong']
                 }
             }
         }
