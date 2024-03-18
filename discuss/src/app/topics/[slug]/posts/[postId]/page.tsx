@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import paths from '../../../../../paths';
 import PostShow from '@/components/posts/post-show';
+import CommentCreateForm from '@/components/comments/comment-create-form';
 
 type PostShowPageProps = {
   params: {
@@ -22,6 +23,7 @@ function PostShowPage({ params }: PostShowPageProps) {
         Back to {slug}
       </Link>
       <PostShow postId={postId} />
+      <CommentCreateForm postId={postId} startOpen />
     </div>
   );
 }
