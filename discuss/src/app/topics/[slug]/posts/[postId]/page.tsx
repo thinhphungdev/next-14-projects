@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import React from 'react';
 import paths from '@/paths';
 import PostShow from '@/components/posts/post-show';
 import CommentCreateForm from '@/components/comments/comment-create-form';
 import CommentList from '@/components/comments/comment-list';
+import { Suspense } from 'react';
+import PostShowLoading from '@/components/posts/post-show-loading';
 
 type PostShowPageProps = {
   params: {
@@ -23,7 +24,9 @@ function PostShowPage({ params }: PostShowPageProps) {
       >
         Back to {slug}
       </Link>
-      <PostShow postId={postId} />
+      <Suspense fallback={<PostShowLoading />}>
+        <PostShow postId={postId} />
+      </Suspense>
       <CommentCreateForm postId={postId} startOpen />
       <CommentList postId={postId} />
     </div>
