@@ -7,6 +7,7 @@ import {
 } from '@nextui-org/react';
 import HeaderAuth from './HeaderAuth';
 import SearchInput from './search-input';
+import { Suspense } from 'react';
 
 async function Header() {
   return (
@@ -18,7 +19,9 @@ async function Header() {
       </NavbarBrand>
       <NavbarContent justify='center'>
         <NavbarItem>
-          <SearchInput />
+          <Suspense>
+            <SearchInput />
+          </Suspense>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify='end'>
